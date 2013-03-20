@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 '''
 args:  compFacade,compClass,facadeName,iFacadeName,facadeMethodName, createMethod, singular
 '''
@@ -6,16 +5,10 @@ args:  compFacade,compClass,facadeName,iFacadeName,facadeMethodName, createMetho
 import os,re
 import logging
 log = logging.getLogger('zen.zenSplunkSearchFacade')
-=======
-import os,re
-import logging
-log = logging.getLogger('zen.zenSplunkSearchfacade')
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
 
 from zope.interface import implements
 from Products.Zuul.facades import ZuulFacade
 from Products.Zuul.utils import ZuulMessageFactory as _t
-<<<<<<< HEAD
 from SplunkSearch import *
 from .interfaces import *
 
@@ -51,21 +44,3 @@ class zenSplunkSearchFacade(ZuulFacade):
 
     	return True, _t("Added Splunk Search for device " + target.id)
 
-=======
-from SplunkSearch import SplunkSearch
-from .interfaces import IzenSplunkSearchFacade
-
-
-class zenSplunkSearchFacade(ZuulFacade):
-    implements(IzenSplunkSearchFacade)
-
-    def addSplunkSearch(self, ob, search=''):
-        """ Adds SplunkSearch Component"""
-        id = ob.id + '_' + re.sub('[^A-Za-z0-9]+', '', search)
-        splunksearch = SplunkSearch(id)
-        ob.os.splunkComponents._setObject(splunksearch.id, splunksearch)
-        splunksearch = ob.os.splunkComponents._getOb(splunksearch.id)
-        splunksearch.splunkSearch = search
-
-        return True, _t(" Added Splunk Search for device %s" % (ob.id))
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb

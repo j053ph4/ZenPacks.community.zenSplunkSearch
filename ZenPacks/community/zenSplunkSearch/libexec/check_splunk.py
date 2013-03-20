@@ -35,26 +35,16 @@ class ZenossSplunkPlugin:
     _port = None
     _username = None
     _password = None
-<<<<<<< HEAD
     _query = None
     _timeout = None
     
     def __init__(self, server, port, username, password, query, timeout=30):
-=======
-
-
-    def __init__(self, server, port, username, password):
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
         self._server = server
         self._port = int(port)
         self._username = username
         self._password = password
-<<<<<<< HEAD
         self._query = query
         self._timeout = timeout
-=======
-
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
 
     def _loadState(self):
         state_filename = os.path.join(gettempdir(), 'check_splunk.pickle')
@@ -64,10 +54,6 @@ class ZenossSplunkPlugin:
                 self._state = load(state_file)
                 state_file.close()
             except Exception, ex:
-<<<<<<< HEAD
-=======
-              
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
                 print 'unable to load state from %s' % state_filename
                 sys.exit(1)
         else:
@@ -85,26 +71,17 @@ class ZenossSplunkPlugin:
             print 'unable to save state in %s' % state_filename
             sys.exit(1)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
     def cacheSessionKey(self, sessionkey):
         if not sessionkey: return
         key = md5('|'.join([self._server, str(self._port), self._username,
             self._password])).hexdigest()
         self._state['sessionkeys'][key] = sessionkey
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
     def getCachedSessionKey(self):
         key = md5('|'.join([self._server, str(self._port), self._username,
             self._password])).hexdigest()
         return self._state['sessionkeys'].get(key, None)
 
-<<<<<<< HEAD
     def run(self, **kwargs):
         self._loadState()
         s = splunklib.Connection(self._server, self._port, self._username, self._password)
@@ -112,19 +89,6 @@ class ZenossSplunkPlugin:
         s.setSessionKey(self.getCachedSessionKey())
         search = 'search %s' % self._query
         
-=======
-
-    def run(self, search, **kwargs):
-        self._loadState()
-        s = splunklib.Connection(
-            self._server, self._port, self._username, self._password)
-
-        # Try using a cached session key if we have one.
-        s.setSessionKey(self.getCachedSessionKey())
-
-        search = 'search %s' % search
-
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
         # Run our search job.
         sid = None
         try:
@@ -135,11 +99,7 @@ class ZenossSplunkPlugin:
             try:
                 sid = s.createSearch(search, **kwargs)
             except splunklib.Unauthorized, ex:
-<<<<<<< HEAD
                 print "WARNING: invalid Splunk username or password"
-=======
-                print "invalid Splunk username or password"
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
                 sys.exit(1)
         except splunklib.Failure, ex:
             print ex
@@ -147,22 +107,13 @@ class ZenossSplunkPlugin:
 
         # Periodically check back for the results of our query.
         results = None
-<<<<<<< HEAD
         for i in range(self._timeout):
-=======
-
-        for i in range(15):
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
             try:
                 results = s.getSearchResults(sid)
                 break
             except:
                 time.sleep(2)
                 continue
-<<<<<<< HEAD
-=======
-
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
         # Cleanup after ourselves.
         self.cacheSessionKey(s.getSessionKey())
         self._saveState()
@@ -170,15 +121,9 @@ class ZenossSplunkPlugin:
             s.deleteSearch(sid)
         except:
             pass
-<<<<<<< HEAD
         
         if not results:
             print "WARNING :no results from Splunk search"
-=======
-
-        if not results:
-            print "no results from Splunk search"
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
             sys.exit(1)
 
         dps = dict(count=0)
@@ -196,10 +141,6 @@ class ZenossSplunkPlugin:
         print "OK|%s" % ' '.join(['%s=%s' % (x, y) for x, y in dps.items()])
         sys.exit(0)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
 if __name__ == '__main__':
     parser = OptionParser()
     parser.add_option('-s', '--server', dest='server',
@@ -210,11 +151,8 @@ if __name__ == '__main__':
         help='Splunk username')
     parser.add_option('-w', '--password', dest='password',
         help='Splunk password')
-<<<<<<< HEAD
     parser.add_option('-q', '--query', dest='query',
         help='Splunk query')
-=======
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
     options, args = parser.parse_args()
 
     if not options.server:
@@ -243,7 +181,6 @@ if __name__ == '__main__':
         else:
             print 'no Splunk password specified'
             sys.exit(1)
-<<<<<<< HEAD
             
     if not options.query:
         print 'no Splunk query specified'
@@ -251,13 +188,3 @@ if __name__ == '__main__':
 
     zsp = ZenossSplunkPlugin(options.server, options.port, options.username, options.password, options.query)
     zsp.run()
-=======
-
-    if len(args) < 1:
-        print 'no Splunk search specified'
-        sys.exit(1)
-
-    zsp = ZenossSplunkPlugin(
-        options.server, options.port, options.username, options.password)
-    zsp.run(' '.join(args))
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
     <configure
         xmlns="http://namespaces.zope.org/zope"
         xmlns:browser="http://namespaces.zope.org/browser"
@@ -72,71 +71,4 @@
         
         </configure>
     </configure>
-=======
-<configure
-    xmlns="http://namespaces.zope.org/zope"
-    xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:zcml="http://namespaces.zope.org/zcml">
-
-	<configure zcml:condition="installed Products.Zuul">
-		
-		<!-- Component Info -->
-		<adapter factory=".info.SplunkSearchInfo"
-			for=".SplunkSearch.SplunkSearch"
-			provides=".interfaces.ISplunkSearchInfo"
-		/>
-
-    	<!-- Import directRouter Directive -->
-    	<include package="Products.ZenUtils.extdirect.zope" file="meta.zcml"/>
-
-	    <browser:directRouter
-	        name="zenSplunkSearch_router"
-	        for="*"
-	        class=".routers.zenSplunkSearchRouter"
-	        namespace="Zenoss.remote"
-	        permission="zenoss.View"
-	    />
-
-    	<adapter
-        	name="zenSplunkSearchAdapter"
-        	provides=".interfaces.IzenSplunkSearchFacade"
-        	for="*"
-        	factory=".facades.zenSplunkSearchFacade"
-        />
-        
-  		<adapter factory=".info.SplunkDataSourceInfo"
-           for=".datasources.SplunkDataSource.SplunkDataSource"
-           provides=".interfaces.ISplunkDataSourceInfo"
-         />
-
-
-		<!-- Javascript stuff -->
-		<browser:resourceDirectory
-				name="zenSplunkSearch"
-				directory="resources"
-		/>
-		
-		<browser:viewlet
-			name="js-zenSplunkSearch"
-			paths="/++resource++zenSplunkSearch/splunksearch.js"
-			weight="10"
-			manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
-			class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
-			permission="zope2.Public"
-		/>
-	
-      <browser:viewlet
-          name="component-add-menu-splunksearch"
-          paths="/++resource++zenSplunkSearch/splunksearch-add.js"
-          weight="9"
-          for="Products.ZenModel.Device.Device"
-          manager="Products.ZenUI3.browser.interfaces.IHeadExtraManager"
-          class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
-          permission="zope2.Public"
-          />
-
-	</configure>
-</configure>
-
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
 
