@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <configure
+        xmlns="http://namespaces.zope.org/zope"
+        xmlns:browser="http://namespaces.zope.org/browser"
+        xmlns:zcml="http://namespaces.zope.org/zcml">
+        <configure zcml:condition="installed Products.Zuul">
+
+            <!-- Datasource Info -->
+            <adapter factory=".info.SplunkSearchDataSourceInfo"
+                for=".datasources.SplunkSearchDataSource.SplunkSearchDataSource"
+                provides=".interfaces.ISplunkSearchDataSourceInfo"
+            />
+            <utility provides="zope.schema.interfaces.IVocabularyFactory"
+                component=".info.SplunkSearchRedirectVocabulary"
+                name="SplunkSearchRedirectVocabulary"
+            />
+            <subscriber zcml:condition="installed ZenPacks.zenoss.DistributedCollector.interfaces"
+                for="ZenPacks.zenoss.DistributedCollector.DistributedPerformanceConf.DistributedPerformanceConf
+                     ZenPacks.zenoss.DistributedCollector.interfaces.ICollectorInstalled"
+                handler=".onCollectorInstalled"
+            />
+            <!-- Component Info -->
+            <adapter factory=".info.SplunkSearchInfo"
+                for=".SplunkSearch.SplunkSearch"
+                provides=".interfaces.ISplunkSearchInfo"
+            />
+    
+            <!-- Import directRouter Directive -->
+            <include package="Products.ZenUtils.extdirect.zope" file="meta.zcml"/>
+    
+            <browser:directRouter
+                name="zenSplunkSearch_router"
+                for="*"
+                class=".routers.zenSplunkSearchRouter"
+                namespace="Zenoss.remote"
+                permission="zenoss.View"
+            />
+    
+            <adapter
+                name="zenSplunkSearchAdapter"
+                provides=".interfaces.IzenSplunkSearchFacade"
+                for="*"
+                factory=".facades.zenSplunkSearchFacade"
+            />
+                
+            <!-- Javascript stuff -->
+            <browser:resourceDirectory
+                    name="zenSplunkSearch"
+                    directory="resources"
+            />
+                
+            <browser:viewlet
+                name="js-zenSplunkSearch"
+                paths="/++resource++zenSplunkSearch/splunksearch.js"
+                weight="10"
+                manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
+                class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+                permission="zope2.Public"
+            />
+            
+            <browser:viewlet
+                  name="component-add-menu-splunksearch"
+                  paths="/++resource++zenSplunkSearch/splunksearch-add.js"
+                  weight="9"
+                  for="Products.ZenModel.Device.Device"
+                  manager="Products.ZenUI3.browser.interfaces.IHeadExtraManager"
+                  class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
+                  permission="zope2.Public"
+            />
+
+        
+        </configure>
+    </configure>
+
