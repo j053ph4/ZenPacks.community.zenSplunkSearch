@@ -110,10 +110,10 @@ class ZenossSplunkPlugin:
         for i in range(self._timeout):
             try:
                 results = s.getSearchResults(sid)
-                break
+                #break
             except:
                 time.sleep(2)
-                continue
+                #continue
         # Cleanup after ourselves.
         self.cacheSessionKey(s.getSessionKey())
         self._saveState()
