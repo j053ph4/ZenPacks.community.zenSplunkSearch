@@ -1,3 +1,4 @@
+
 (function() {
         
             function getPageContext() {
@@ -21,25 +22,26 @@
                                 labelAlign: 'top',
                                 footerStyle: 'padding-left: 0',
                                 border: false,
-                                items: [
-                {
-                xtype: 'textfield',
-                name: 'alias',
-                fieldLabel: _t('Alias'),
-                id: "aliasField",
-                width: 260,
-                allowBlank: false,
-                },
-                
-                {
-                xtype: 'textfield',
-                name: 'query',
-                fieldLabel: _t('Query'),
-                id: "queryField",
-                width: 260,
-                allowBlank: false,
-                },
-                ],
+                                items:                         [
+                            {
+                                fieldLabel: 'Alias', 
+                                allowBlank: 'false', 
+                                name: 'alias', 
+                                width: 260, 
+                                id: 'aliasField', 
+                                xtype: 'textfield'
+                            }, 
+                            {
+                                fieldLabel: 'Query', 
+                                allowBlank: 'false', 
+                                name: 'query', 
+                                width: 260, 
+                                id: 'queryField', 
+                                xtype: 'textfield'
+                            }
+                        ]
+
+                                ,
                                 buttons: [{
                                     xtype: 'DialogButton',
                                     id: 'zenSplunkSearch-submit',
@@ -56,8 +58,11 @@
                                                     message: response.msg,
                                                     buttons: [{
                                                         xtype: 'DialogButton',
-                                                        text: _t('OK')
-                                                    }]
+                                                        text: _t('OK'),
+                                                        handler: function() { 
+                                                            window.top.location.reload();
+                                                            }
+                                                        }]
                                                 }).show();
                                             }
                                             else {
@@ -65,8 +70,11 @@
                                                     message: response.msg,
                                                     buttons: [{
                                                         xtype: 'DialogButton',
-                                                        text: _t('OK')
-                                                    }]
+                                                        text: _t('OK'),
+                                                        handler: function() { 
+                                                            window.top.location.reload();
+                                                            }
+                                                        }]
                                                 }).show();
                                             }
                                         });

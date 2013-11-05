@@ -31,23 +31,23 @@ ${here/alias}
 <property switch="None" type="int" id="cycletime" mode="w" >
 60
 </property>
-<property switch="-u" type="string" id="user" mode="w" >
-${here/user}
-</property>
-<property switch="-t" type="string" id="timeout" mode="w" >
-300
-</property>
-<property switch="-q" type="string" id="query" mode="w" >
-${here/query}
-</property>
 <property switch="-w" type="string" id="password" mode="w" >
 ${here/password}
 </property>
 <property switch="-p" type="string" id="port" mode="w" >
 ${here/port}
 </property>
+<property switch="-q" type="string" id="query" mode="w" >
+${here/query}
+</property>
 <property switch="-s" type="string" id="server" mode="w" >
 ${here/server}
+</property>
+<property switch="-t" type="int" id="timeout" mode="w" >
+300
+</property>
+<property switch="-u" type="string" id="user" mode="w" >
+${here/user}
 </property>
 <tomanycont id='datapoints'>
 <object id='count' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>

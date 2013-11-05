@@ -3,15 +3,12 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.zenSplunkSearch"
-<<<<<<< HEAD
-VERSION = "2.0"
+VERSION = "2.1"
 AUTHOR = "Joseph Anderson"
 LICENSE = "Apache"
-=======
-VERSION = "1.1"
+VERSION = "2.1"
 AUTHOR = "Joseph Anderson"
-LICENSE = ""
->>>>>>> 4d329403a84318cea7c3058767c0ddf937d76fdb
+LICENSE = "Apache"
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.zenSplunkSearch']
 INSTALL_REQUIRES = []

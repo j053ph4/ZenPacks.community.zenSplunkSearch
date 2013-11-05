@@ -5,59 +5,51 @@
         xmlns:zcml="http://namespaces.zope.org/zcml">
         <configure zcml:condition="installed Products.Zuul">
 
-            <!-- Datasource Info -->
-            <adapter factory=".info.SplunkSearchDataSourceInfo"
-                for=".datasources.SplunkSearchDataSource.SplunkSearchDataSource"
-                provides=".interfaces.ISplunkSearchDataSourceInfo"
-            />
-            <utility provides="zope.schema.interfaces.IVocabularyFactory"
-                component=".info.SplunkSearchRedirectVocabulary"
-                name="SplunkSearchRedirectVocabulary"
-            />
-            <subscriber zcml:condition="installed ZenPacks.zenoss.DistributedCollector.interfaces"
-                for="ZenPacks.zenoss.DistributedCollector.DistributedPerformanceConf.DistributedPerformanceConf
-                     ZenPacks.zenoss.DistributedCollector.interfaces.ICollectorInstalled"
-                handler=".onCollectorInstalled"
-            />
-            <!-- Component Info -->
-            <adapter factory=".info.SplunkSearchInfo"
-                for=".SplunkSearch.SplunkSearch"
-                provides=".interfaces.ISplunkSearchInfo"
-            />
-    
-            <!-- Import directRouter Directive -->
             <include package="Products.ZenUtils.extdirect.zope" file="meta.zcml"/>
-    
+
+
+            <!-- ZenPack Info -->
+
             <browser:directRouter
                 name="zenSplunkSearch_router"
                 for="*"
-                class=".routers.zenSplunkSearchRouter"
+                class="ZenPacks.community.zenSplunkSearch.routers.zenSplunkSearchRouter"
                 namespace="Zenoss.remote"
                 permission="zenoss.View"
             />
     
             <adapter
                 name="zenSplunkSearchAdapter"
-                provides=".interfaces.IzenSplunkSearchFacade"
+                provides="ZenPacks.community.zenSplunkSearch.interfaces.IzenSplunkSearchFacade"
                 for="*"
-                factory=".facades.zenSplunkSearchFacade"
+                factory="ZenPacks.community.zenSplunkSearch.facades.zenSplunkSearchFacade"
             />
                 
-            <!-- Javascript stuff -->
             <browser:resourceDirectory
                     name="zenSplunkSearch"
                     directory="resources"
             />
-                
+
+            <!-- Component Info -->
+            <adapter factory="ZenPacks.community.zenSplunkSearch.info.SplunkSearchInfo"
+                for="ZenPacks.community.zenSplunkSearch.SplunkSearch.SplunkSearch"
+                provides="ZenPacks.community.zenSplunkSearch.interfaces.ISplunkSearchInfo"
+            />
+    
             <browser:viewlet
-                name="js-zenSplunkSearch"
+                name="js-SplunkSearch"
                 paths="/++resource++zenSplunkSearch/splunksearch.js"
                 weight="10"
                 manager="Products.ZenUI3.browser.interfaces.IJavaScriptSrcManager"
                 class="Products.ZenUI3.browser.javascript.JavaScriptSrcBundleViewlet"
                 permission="zope2.Public"
             />
-            
+
+            <utility provides="zope.schema.interfaces.IVocabularyFactory"
+                component=".info.SplunkSearchgetEventClassesVocabulary"
+                name="SplunkSearchgetEventClasses"
+            />
+
             <browser:viewlet
                   name="component-add-menu-splunksearch"
                   paths="/++resource++zenSplunkSearch/splunksearch-add.js"
@@ -68,7 +60,23 @@
                   permission="zope2.Public"
             />
 
-        
+            <!-- Datasource Info -->
+            <adapter factory="ZenPacks.community.zenSplunkSearch.info.SplunkSearchDataSourceInfo"
+                for="ZenPacks.community.zenSplunkSearch.datasources.SplunkSearchDataSource.SplunkSearchDataSource"
+                provides="ZenPacks.community.zenSplunkSearch.interfaces.ISplunkSearchDataSourceInfo"
+            />
+
+            <utility provides="zope.schema.interfaces.IVocabularyFactory"
+                component=".info.SplunkSearchRedirectVocabulary"
+                name="SplunkSearchRedirectVocabulary"
+            />
+
+            <subscriber zcml:condition="installed ZenPacks.zenoss.DistributedCollector.interfaces"
+                for="ZenPacks.zenoss.DistributedCollector.DistributedPerformanceConf.DistributedPerformanceConf
+                     ZenPacks.zenoss.DistributedCollector.interfaces.ICollectorInstalled"
+                handler=".onCollectorInstalledSplunkSearch"
+            />
+
         </configure>
     </configure>
 

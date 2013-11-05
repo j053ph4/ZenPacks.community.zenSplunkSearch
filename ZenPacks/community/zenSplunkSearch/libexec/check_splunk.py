@@ -1,10 +1,4 @@
 #!/usr/bin/env python
-######################################################################
-#
-# Copyright 2009 Zenoss, Inc.  All Rights Reserved.
-#
-######################################################################
-
 import os
 import sys
 import time
@@ -13,9 +7,7 @@ from md5 import md5
 from optparse import OptionParser
 from tempfile import gettempdir
 from xml.dom.minidom import parseString
-
 import splunklib
-
 
 def getText(element):
     return element.childNodes[0].data
@@ -37,7 +29,7 @@ class ZenossSplunkPlugin:
     _password = None
     _query = None
     _timeout = None
-    
+
     def __init__(self, server, port, username, password, query, timeout=30):
         self._server = server
         self._port = int(port)
@@ -88,7 +80,7 @@ class ZenossSplunkPlugin:
         # Try using a cached session key if we have one.
         s.setSessionKey(self.getCachedSessionKey())
         search = 'search %s' % self._query
-        
+
         # Run our search job.
         sid = None
         try:
@@ -121,7 +113,7 @@ class ZenossSplunkPlugin:
             s.deleteSearch(sid)
         except:
             pass
-        
+
         if not results:
             print "WARNING :no results from Splunk search"
             sys.exit(1)
@@ -181,7 +173,7 @@ if __name__ == '__main__':
         else:
             print 'no Splunk password specified'
             sys.exit(1)
-            
+
     if not options.query:
         print 'no Splunk query specified'
         sys.exit(1)
