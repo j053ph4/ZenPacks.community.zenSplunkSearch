@@ -9,7 +9,11 @@
             return ob;
         }
     }
-
+    
+    function pass_link(ob){ 
+        return ob; 
+    }
+    
     ZC.SplunkSearchPanel = Ext.extend(ZC.ComponentGridPanel, {
         constructor: function(config) {
             config = Ext.applyIf(config||{}, {
@@ -65,16 +69,18 @@
                         "dataIndex": "name"
                     }, 
                     {
-                        "header": "Alias", 
-                        "width": 120, 
                         "sortable": "true", 
+                        "width": 120, 
+                        "header": "Alias", 
+                        "renderer": "pass_link", 
                         "id": "alias", 
                         "dataIndex": "alias"
                     }, 
                     {
-                        "header": "Query", 
-                        "width": 120, 
                         "sortable": "true", 
+                        "width": 120, 
+                        "header": "Query", 
+                        "renderer": "pass_link", 
                         "id": "query", 
                         "dataIndex": "query"
                     }, 

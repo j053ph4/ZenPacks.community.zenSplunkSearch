@@ -1,8 +1,9 @@
 from ZenPacks.community.ConstructionKit.BasicDefinition import *
 from ZenPacks.community.ConstructionKit.Construct import *
 
+
 SplunkDefinition = type('SplunkDefinition', (BasicDefinition,), {
-        'version' : Version(2, 0, 0),
+        'version' : Version(2, 1, 1),
         'zenpackbase': "zenSplunkSearch",
         'component' : 'SplunkSearch',
         'componentData' : {
@@ -30,5 +31,7 @@ SplunkDefinition = type('SplunkDefinition', (BasicDefinition,), {
                             ('zSplunkUsername', 'default', 'string'),
                             ('zSplunkPassword', 'default', 'password'),
                             ],
-        }
+        'saveOld': True,
+        'loadOld': True,         
+        },
 )
