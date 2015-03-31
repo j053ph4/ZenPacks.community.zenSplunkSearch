@@ -19,6 +19,7 @@ SplunkDefinition = type('SplunkDefinition', (BasicDefinition,), {
                                 'port': addProperty('Port','zSplunkPort', switch='-p',override=True, isReference=True),
                                 'user': addProperty('User','zSplunkUsername', switch='-u',override=True, isReference=True),
                                 'password': addProperty('Password','zSplunkPassword', switch='-w',override=True, isReference=True),
+                                'productKey' : getProductClass('Splunk'),
                                 },
                           },
         'addManual' : True,
@@ -35,3 +36,4 @@ SplunkDefinition = type('SplunkDefinition', (BasicDefinition,), {
         'loadOld': True,         
         },
 )
+

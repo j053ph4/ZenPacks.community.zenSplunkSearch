@@ -5,10 +5,10 @@
 NAME = "ZenPacks.community.zenSplunkSearch"
 VERSION = "2.1.1"
 AUTHOR = "Joseph Anderson"
-LICENSE = "GPLv2+"
+LICENSE = "Apache"
 VERSION = "2.1.1"
 AUTHOR = "Joseph Anderson"
-LICENSE = "GPLv2+"
+LICENSE = "Apache"
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
 PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.zenSplunkSearch']
 INSTALL_REQUIRES = []
